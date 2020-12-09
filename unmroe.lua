@@ -28,7 +28,7 @@
 
 _addon = {}
 _addon.name = 'unmroe'
-_addon.version = '1.0.1'
+_addon.version = '1.0.2'
 _addon.author = "Zetonegi"
 _addon.commands = {'unmroe', 'uroe'}
 
@@ -145,7 +145,7 @@ _unms = {
     ["wajaom woodlands"] = {896,921},
     ["alzadaal undersea ruins"] = {899},
     ["behemoth's dominion"] = {914},
-    ["valley of sorrow"] = {916},
+    ["valley of sorrows"] = {916},
     ["fei'yin"] = {918},
     ["gustav tunnel"] = {920},
     ["caedarva mire"] = {923},
@@ -260,8 +260,15 @@ local function acceptRoe(key)
     for k in pairs(ids) do
         id = tonumber(ids[k])
         
-        if not id or _roe.complete[id] or _roe.active[id] then return
+        if not id then 
+            --notice('not id' .. id)
+            return
         end
+        if _roe.active[id] then 
+            --notice('already set')
+            return
+        end
+
 
         local p = packets.new('outgoing', 0x10c, {['RoE Quest'] = id })
         packets.inject(p)
